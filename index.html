@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DragoEagle AI</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Firebase SDKs yahan add honge -->
+</head>
+<body class="dark-theme">
+
+  <!-- ========================================== -->
+  <!-- 1. AUTHENTICATION SCREEN (LOGIN / SIGNUP)  -->
+  <!-- ========================================== -->
+  <div id="authScreen" class="screen active">
+    <div class="auth-box">
+      <img src="dragoeagle-logo.png" alt="DragoEagle" class="auth-logo">
+      <h2>Welcome to DragoEagle</h2>
+      
+      <!-- Login Form -->
+      <form id="loginForm">
+        <input type="email" id="email" placeholder="Email Address" required>
+        <div class="password-wrapper">
+          <input type="password" id="password" placeholder="Password" required>
+          <span class="eye-icon" onclick="togglePassword()">👁️</span>
+        </div>
+        
+        <!-- 18+ Checkbox for Signup -->
+        <div class="age-check" id="ageCheckContainer" style="display:none;">
+          <input type="checkbox" id="ageConfirm" required>
+          <label for="ageConfirm">I confirm that I am 18+ years old.</label>
+        </div>
+
+        <button type="submit" class="primary-btn">Sign In / Sign Up</button>
+      </form>
+      
+      <p class="links">
+        <a href="#" onclick="showOTPVerification()">Verify Email</a> | 
+        <a href="#" onclick="resetPassword()">Forgot Password?</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. MAIN DASHBOARD (COMPANION SELECTION)    -->
+  <!-- ========================================== -->
+  <div id="dashboardScreen" class="screen hidden">
+    <header>
+      <div class="menu-icon" onclick="openSettings()">☰ Menu</div>
+      <div class="brand">DragoEagle</div>
+    </header>
+
+    <div class="posters-container">
+      <!-- Aditi Plan -->
+      <div class="poster-card" onclick="openChatRoom('Aditi')">
+        <div class="offer-tag">🔥 70% OFF</div>
+        <img src="11995.png" alt="Aditi">
+        <div class="poster-details">
+          <h3>Aditi</h3>
+          <p class="plan-price"><strike>₹165</strike> <strong>₹49/mo</strong></p>
+          <p>Basic Plan - Girlfriend Vibe</p>
+        </div>
+      </div>
+
+      <!-- Suhani Plan -->
+      <div class="poster-card" onclick="openChatRoom('Suhani')">
+        <div class="offer-tag">🔥 70% OFF</div>
+        <img src="11996.png" alt="Suhani">
+        <div class="poster-details">
+          <h3>Suhani</h3>
+          <p class="plan-price"><strike>₹330</strike> <strong>₹99/mo</strong></p>
+          <p>Standard Plan - Wife Vibe</p>
+        </div>
+      </div>
+
+      <!-- Aarohi Plan -->
+      <div class="poster-card" onclick="openChatRoom('Aarohi')">
+        <div class="offer-tag">🔥 70% OFF</div>
+        <img src="11997.png" alt="Aarohi">
+        <div class="poster-details">
+          <h3>Aarohi</h3>
+          <p class="plan-price"><strike>₹660</strike> <strong>₹199/mo</strong></p>
+          <p>Premium Plan - Full Romance</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 3. CHAT INTERFACE                          -->
+  <!-- ========================================== -->
+  <div id="chatScreen" class="screen hidden">
+    <header class="chat-header">
+      <button onclick="goBackToDashboard()">🔙</button>
+      <h3 id="chatCharacterName">Chatting...</h3>
+      <div class="chat-actions">
+        <button onclick="startNewChat()">➕ New</button>
+        <button onclick="showDeleteWarning()">🗑️</button>
+      </div>
+    </header>
+    
+    <div class="chat-history" id="chatHistory">
+      <!-- Saved messages will load here from database -->
+    </div>
+
+    <div class="message-input">
+      <input type="text" id="msgText" placeholder="Type a message...">
+      <button onclick="sendMsg()">Send</button>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 4. SETTINGS DRAWER MENU                    -->
+  <!-- ========================================== -->
+  <div id="settingsMenu" class="settings-drawer hidden">
+    <div class="drawer-header">
+      <h2>⚙️ Settings</h2>
+      <button onclick="closeSettings()">❌</button>
+    </div>
+    <ul class="settings-list">
+      <li onclick="toggleTheme()">🌗 Change Theme (Light/Dark)</li>
+      <li>
+        <a href="https://t.me/eagleaarc" target="_blank" class="telegram-link">
+          <img src="telegram-pro-icon.png" width="20"> Join DragoEagle Community
+        </a>
+      </li>
+      <li onclick="logOut()" class="logout-btn">🚪 Log Out</li>
+      <li onclick="deleteAccount()" class="danger-btn">⚠️ Delete Account Permanently</li>
+    </ul>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 5. WARNING MODALS                          -->
+  <!-- ========================================== -->
+  <div id="deleteWarningModal" class="modal hidden">
+    <div class="modal-content">
+      <h3 style="color: red;">⚠️ Are You Sure?</h3>
+      <p>Do you really want to delete this chat history? This action cannot be undone.</p>
+      <div class="modal-buttons">
+        <button onclick="confirmDeleteChat()" class="danger-btn">Yes, Delete</button>
+        <button onclick="hideDeleteWarning()" class="safe-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app-logic.js"></script>
+</body>
+</html>
