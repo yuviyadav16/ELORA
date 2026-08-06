@@ -5,156 +5,200 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Elora - Powered by DragoEagle</title>
   <link rel="stylesheet" href="style.css">
+  <!-- FontAwesome for Premium Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="dark-theme">
 
   <!-- ========================================== -->
-  <!-- 1. SPLASH SCREEN (10 Seconds)              -->
+  <!-- 1. PREMIUM SPLASH SCREEN                   -->
   <!-- ========================================== -->
   <div id="splashScreen" class="screen splash-active">
-    <div class="splash-center">
-      <img src="11948_2.png" alt="Elora Logo" class="elora-logo pulse-animation">
-      <div class="powered-by">
-        <p>Powered by</p>
+    <div class="splash-content">
+      <img src="11948_2.png" alt="Elora" class="splash-elora pulse-anim">
+      <div class="splash-branding">
+        <p>POWERED BY</p>
         <div class="brand-row">
-          <img src="11947_3.png" alt="DragoEagle Logo" class="drago-logo">
-          <span>DragoEagle</span>
+          <img src="11947_3.png" alt="DragoEagle Logo">
+          <span>DRAGOEAGLE</span>
         </div>
       </div>
     </div>
   </div>
 
   <!-- ========================================== -->
-  <!-- 2. AUTHENTICATION SCREEN                   -->
+  <!-- 2. PRO AUTHENTICATION (Login / Signup)     -->
   <!-- ========================================== -->
-  <div id="authScreen" class="screen hidden fade-in">
-    <div class="auth-box">
-      <img src="11948_2.png" alt="Elora" class="auth-avatar">
-      <h2>Create Account / Login</h2>
-      <p class="auth-sub">Enter details to meet your companion</p>
+  <div id="authScreen" class="screen hidden">
+    <div class="auth-card fade-up">
+      <img src="11948_2.png" alt="Elora Logo" class="auth-logo">
+      <h2>Join Elora AI</h2>
+      <p class="auth-subtitle">Create your companion account</p>
       
-      <div id="loginForm">
-        <input type="email" id="email" placeholder="Email Address" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button class="primary-btn" onclick="loginDummy()">Sign In / Sign Up</button>
-      </div>
-      
-      <p class="links">
+      <form id="authForm" onsubmit="event.preventDefault(); loginUser();">
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" id="userName" placeholder="Full Name" required>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="userEmail" placeholder="Email Address" required>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-calendar-alt"></i>
+          <input type="date" id="userDOB" required title="Date of Birth">
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="userPassword" placeholder="Password" required>
+          <i class="fas fa-eye toggle-password" onclick="togglePassword()"></i>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="ageCheck" required>
+          <label for="ageCheck">I confirm that I am 18+ years old.</label>
+        </div>
+        
+        <button type="submit" class="premium-btn">Sign In / Sign Up</button>
+      </form>
+      <div class="auth-links">
         <a href="#">Verify Email</a> | <a href="#">Forgot Password?</a>
-      </p>
+      </div>
     </div>
   </div>
 
   <!-- ========================================== -->
-  <!-- 3. MAIN DASHBOARD                          -->
+  <!-- 3. HOME DASHBOARD                          -->
   <!-- ========================================== -->
-  <div id="dashboardScreen" class="screen hidden fade-in">
-    <header class="dash-header">
-      <div class="brand">Elora <span class="badge">PRO</span></div>
-      <div class="menu-icon" onclick="toggleSettings()">⚙️ Settings</div>
+  <div id="dashboardScreen" class="screen hidden">
+    <header class="home-header">
+      <div class="animated-brand">
+        <span class="gradient-text elora-title">Elora</span>
+        <span class="powered-text">Powered by DragoEagle</span>
+      </div>
+      <button class="icon-btn" onclick="openSettings()"><i class="fas fa-ellipsis-v"></i></button>
     </header>
 
-    <div class="posters-container">
-      <div class="poster-card" onclick="openChatRoom('Aditi')">
-        <div class="offer-tag">🔥 70% OFF</div>
-        <img src="11995.png" alt="Aditi">
-        <div class="poster-details">
+    <div class="cards-container fade-up">
+      <!-- Aditi -->
+      <div class="companion-card" onclick="openChat('Aditi', '11987_2.png', '11988_2.png')">
+        <div class="card-image" style="background-image: url('11995.png');">
+          <div class="price-tag">₹49/mo</div>
+        </div>
+        <div class="card-info">
           <h3>Aditi</h3>
-          <p class="plan-price"><strike>₹165</strike> <strong>₹49/mo</strong></p>
+          <p>Basic Companion</p>
         </div>
       </div>
-
-      <div class="poster-card" onclick="openChatRoom('Suhani')">
-        <div class="offer-tag">🔥 70% OFF</div>
-        <img src="11996.png" alt="Suhani">
-        <div class="poster-details">
+      <!-- Suhani -->
+      <div class="companion-card" onclick="openChat('Suhani', '11993_2.png', '11984_2.png')">
+        <div class="card-image" style="background-image: url('11996.png');">
+          <div class="price-tag">₹99/mo</div>
+        </div>
+        <div class="card-info">
           <h3>Suhani</h3>
-          <p class="plan-price"><strike>₹330</strike> <strong>₹99/mo</strong></p>
+          <p>Standard Companion</p>
         </div>
       </div>
-
-      <div class="poster-card" onclick="openChatRoom('Aarohi')">
-        <div class="offer-tag">🔥 70% OFF</div>
-        <img src="11997.png" alt="Aarohi">
-        <div class="poster-details">
+      <!-- Aarohi -->
+      <div class="companion-card" onclick="openChat('Aarohi', '11992_2.png', '11985_2.png')">
+        <div class="card-image" style="background-image: url('11997.png');">
+          <div class="price-tag">₹199/mo</div>
+        </div>
+        <div class="card-info">
           <h3>Aarohi</h3>
-          <p class="plan-price"><strike>₹660</strike> <strong>₹199/mo</strong></p>
+          <p>Premium Romance</p>
         </div>
       </div>
     </div>
   </div>
 
   <!-- ========================================== -->
-  <!-- 4. CHAT INTERFACE                          -->
+  <!-- 4. CHAT SCREEN (Gemini Style)              -->
   <!-- ========================================== -->
   <div id="chatScreen" class="screen hidden">
     <header class="chat-header">
-      <button class="back-btn" onclick="goBackToDashboard()">🔙</button>
-      <div id="chatCharacterName" class="chat-title"></div>
-      <div class="chat-actions"><button class="action-btn">🗑️</button></div>
+      <button class="icon-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i></button>
+      <div class="chat-profile">
+        <img id="chatAvatar" src="" alt="AI">
+        <span id="chatName">Name</span>
+      </div>
+      <button class="icon-btn" onclick="toggleChatMenu()"><i class="fas fa-ellipsis-v"></i></button>
+      
+      <!-- Chat 3-Dot Dropdown Menu -->
+      <div id="chatMenu" class="dropdown-menu hidden">
+        <div onclick="alert('History Loaded!')"><i class="fas fa-history"></i> Chat History</div>
+        <div onclick="startNewChat()"><i class="fas fa-plus"></i> New Chat</div>
+        <div class="danger" onclick="showModal('deleteChatModal')"><i class="fas fa-trash"></i> Delete Chat</div>
+      </div>
     </header>
-    <div class="chat-history" id="chatHistory"></div>
-    <div class="message-input">
-      <input type="text" id="msgText" placeholder="Type a message...">
-      <button class="send-btn" onclick="sendMsg()">Send</button>
+
+    <div id="chatArea" class="chat-area">
+      <!-- Messages inject here -->
+    </div>
+
+    <div class="chat-input-container">
+      <button class="attach-btn"><i class="fas fa-image"></i></button>
+      <input type="text" id="chatInput" placeholder="Message Elora..." onkeypress="handleEnter(event)">
+      <button class="send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
     </div>
   </div>
 
   <!-- ========================================== -->
-  <!-- 5. 20+ PROFESSIONAL SETTINGS DRAWER        -->
+  <!-- 5. SETTINGS DRAWER (Slide in from Right)   -->
   <!-- ========================================== -->
   <div id="settingsDrawer" class="drawer hidden">
     <div class="drawer-header">
-      <h2>App Settings</h2>
-      <button class="close-btn" onclick="toggleSettings()">❌</button>
+      <h3>Settings</h3>
+      <button class="icon-btn" onclick="closeSettings()"><i class="fas fa-times"></i></button>
     </div>
-    
     <div class="drawer-content">
-      <!-- User Profile Setup -->
-      <div class="profile-section">
-        <div class="avatar-upload">
-          <img src="11947_3.png" alt="Profile" id="userAvatar">
-          <div class="edit-badge">📷</div>
+      <div class="profile-setup">
+        <div class="dp-wrapper">
+          <img src="11947_3.png" id="displayDP" alt="User">
+          <label for="dpUpload" class="edit-dp"><i class="fas fa-camera"></i></label>
+          <input type="file" id="dpUpload" style="display:none;" accept="image/*">
         </div>
-        <input type="text" class="profile-input" placeholder="Enter Your Name" value="Yuvi Bhai">
-        <input type="date" class="profile-input" title="Date of Birth" required>
-        <button class="save-profile-btn">Save Profile</button>
+        <h3 id="displayUserName">Yuvi Bhai</h3>
+        <p id="displayUserAge" class="sub-text">Age: 18+</p>
       </div>
 
-      <!-- 20+ Professional Settings List -->
       <ul class="settings-list">
-        <li class="section-title">Account & Security</li>
-        <li>📧 Verify Email Address</li>
-        <li>🔐 Change Password</li>
-        <li>🛡️ Two-Factor Authentication (2FA)</li>
-        <li>🔞 18+ Age Verification Status</li>
-        
-        <li class="section-title">Chat & Preferences</li>
-        <li>💬 Chat History Auto-Save</li>
-        <li>🎙️ AI Voice Replies (Toggle)</li>
-        <li>🔠 Text Size & Font</li>
-        <li>🌍 Language (Hinglish/English)</li>
-        <li>💾 Export Chat History</li>
-        <li>🧹 Clear All Chats</li>
-
-        <li class="section-title">Notifications</li>
-        <li>🔔 Push Notifications</li>
-        <li>🎵 Message Sound Alerts</li>
-        <li>✉️ Email Offers & Updates</li>
-
-        <li class="section-title">Billing & Subscriptions</li>
-        <li>💳 Manage Subscription</li>
-        <li>🧾 Payment History</li>
-        <li>🎟️ Redeem Promo Code</li>
-
-        <li class="section-title">App & Support</li>
-        <li>🌗 Dark / Light Theme</li>
-        <li>🗑️ Clear App Cache</li>
-        <li>📜 Terms & Privacy Policy</li>
-        <li><a href="https://t.me/eagleaarc" style="color:#d175ff; text-decoration:none;">✈️ Join DragoEagle Telegram</a></li>
-        <li class="danger-zone" onclick="window.location.reload()">🚪 Log Out</li>
-        <li class="danger-zone">⚠️ Delete Account Permanently</li>
+        <li onclick="toggleTheme()"><i class="fas fa-moon"></i> Dark/Light Theme</li>
+        <li><a href="https://t.me/dragoeagle" target="_blank" style="color:inherit; text-decoration:none;"><i class="fab fa-telegram"></i> Join Telegram Channel</a></li>
+        <li><i class="fas fa-headset"></i> Help & Support</li>
+        <li onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Log Out</li>
+        <li class="danger" onclick="showModal('deleteAccountModal')"><i class="fas fa-user-times"></i> Delete Account</li>
       </ul>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 6. WARNING MODALS                          -->
+  <!-- ========================================== -->
+  
+  <!-- Delete Chat Warning -->
+  <div id="deleteChatModal" class="modal hidden">
+    <div class="modal-box">
+      <i class="fas fa-exclamation-triangle warning-icon"></i>
+      <h3>Delete Chat History?</h3>
+      <p>Are you sure you want to permanently delete this chat? This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button class="cancel-btn" onclick="hideModal('deleteChatModal')">Cancel</button>
+        <button class="delete-btn" onclick="confirmDeleteChat()">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Account Warning -->
+  <div id="deleteAccountModal" class="modal hidden">
+    <div class="modal-box">
+      <i class="fas fa-skull-crossbones warning-icon" style="color: #ff3333;"></i>
+      <h3>Permanent Account Deletion</h3>
+      <p>Warning: Deleting your account will erase all your chats, profile, and active subscriptions permanently. A verification link will be sent to your email to confirm this action.</p>
+      <div class="modal-actions">
+        <button class="cancel-btn" onclick="hideModal('deleteAccountModal')">Cancel</button>
+        <button class="delete-btn" onclick="confirmDeleteAccount()">Send Email & Delete</button>
+      </div>
     </div>
   </div>
 
