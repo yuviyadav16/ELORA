@@ -1,0 +1,70 @@
+/* Chat Screen Background Setup */
+#chatScreen {
+  transition: background-image 0.5s ease-in-out;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Chat Header Setup (Name + Circular Logo) */
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: rgba(24, 24, 36, 0.6); /* Glassmorphism effect */
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #d175ff;
+}
+
+#chatCharacterName {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 18px;
+  margin: 0;
+}
+
+/* Circular Avatar for Header */
+.chat-header-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #d175ff;
+  box-shadow: 0 0 10px rgba(209, 117, 255, 0.4);
+}
+
+/* Chat Messages Transparency (Taki Background Dikhe) */
+.chat-history {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bot-msg {
+  background: rgba(34, 34, 48, 0.7);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 16px;
+  border-radius: 0px 16px 16px 16px;
+  color: #fff;
+  max-width: 80%;
+  align-self: flex-start;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.user-msg {
+  background: linear-gradient(135deg, #0088cc, #005f99);
+  padding: 12px 16px;
+  border-radius: 16px 0px 16px 16px;
+  color: #fff;
+  max-width: 80%;
+  align-self: flex-end;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
