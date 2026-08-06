@@ -3,41 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DragoEagle AI</title>
+  <title>Elora - Powered by DragoEagle</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- 1. AUTHENTICATION SCREEN -->
-  <div id="authScreen" class="screen active">
+  <!-- ========================================== -->
+  <!-- 1. SPLASH SCREEN (10 Seconds)              -->
+  <!-- ========================================== -->
+  <div id="splashScreen" class="screen splash-active">
+    <div class="splash-center">
+      <img src="11948_2.png" alt="Elora Logo" class="elora-logo pulse-animation">
+      <div class="powered-by">
+        <p>Powered by</p>
+        <div class="brand-row">
+          <img src="11947_3.png" alt="DragoEagle Logo" class="drago-logo">
+          <span>DragoEagle</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. AUTHENTICATION SCREEN                   -->
+  <!-- ========================================== -->
+  <div id="authScreen" class="screen hidden fade-in">
     <div class="auth-box">
-      <h1 class="brand-title">DragoEagle</h1>
-      <h2>Welcome to DragoEagle</h2>
+      <img src="11948_2.png" alt="Elora" class="auth-avatar">
+      <h2>Create Account / Login</h2>
+      <p class="auth-sub">Enter details to meet your companion</p>
       
       <div id="loginForm">
         <input type="email" id="email" placeholder="Email Address" required>
-        <div class="password-wrapper">
-          <input type="password" id="password" placeholder="Password" required>
-        </div>
+        <input type="password" id="password" placeholder="Password" required>
         <button class="primary-btn" onclick="loginDummy()">Sign In / Sign Up</button>
       </div>
       
       <p class="links">
-        <a href="#">Verify Email</a> | 
-        <a href="#">Forgot Password?</a>
+        <a href="#">Verify Email</a> | <a href="#">Forgot Password?</a>
       </p>
     </div>
   </div>
 
-  <!-- 2. MAIN DASHBOARD (Hidden by default) -->
-  <div id="dashboardScreen" class="screen hidden">
+  <!-- ========================================== -->
+  <!-- 3. MAIN DASHBOARD                          -->
+  <!-- ========================================== -->
+  <div id="dashboardScreen" class="screen hidden fade-in">
     <header class="dash-header">
-      <div class="menu-icon">☰ Menu</div>
-      <div class="brand">DragoEagle</div>
+      <div class="brand">Elora <span class="badge">PRO</span></div>
+      <div class="menu-icon" onclick="toggleSettings()">⚙️ Settings</div>
     </header>
 
     <div class="posters-container">
-      <!-- Aditi -->
       <div class="poster-card" onclick="openChatRoom('Aditi')">
         <div class="offer-tag">🔥 70% OFF</div>
         <img src="11995.png" alt="Aditi">
@@ -47,7 +64,6 @@
         </div>
       </div>
 
-      <!-- Suhani -->
       <div class="poster-card" onclick="openChatRoom('Suhani')">
         <div class="offer-tag">🔥 70% OFF</div>
         <img src="11996.png" alt="Suhani">
@@ -57,7 +73,6 @@
         </div>
       </div>
 
-      <!-- Aarohi -->
       <div class="poster-card" onclick="openChatRoom('Aarohi')">
         <div class="offer-tag">🔥 70% OFF</div>
         <img src="11997.png" alt="Aarohi">
@@ -69,25 +84,77 @@
     </div>
   </div>
 
-  <!-- 3. CHAT INTERFACE (Hidden by default) -->
+  <!-- ========================================== -->
+  <!-- 4. CHAT INTERFACE                          -->
+  <!-- ========================================== -->
   <div id="chatScreen" class="screen hidden">
     <header class="chat-header">
       <button class="back-btn" onclick="goBackToDashboard()">🔙</button>
-      <div id="chatCharacterName" class="chat-title">
-        <!-- Logo and Name will load here -->
-      </div>
-      <div class="chat-actions">
-        <button class="action-btn">🗑️</button>
-      </div>
+      <div id="chatCharacterName" class="chat-title"></div>
+      <div class="chat-actions"><button class="action-btn">🗑️</button></div>
     </header>
-    
-    <div class="chat-history" id="chatHistory">
-      <!-- Chat loads here -->
-    </div>
-
+    <div class="chat-history" id="chatHistory"></div>
     <div class="message-input">
       <input type="text" id="msgText" placeholder="Type a message...">
       <button class="send-btn" onclick="sendMsg()">Send</button>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 5. 20+ PROFESSIONAL SETTINGS DRAWER        -->
+  <!-- ========================================== -->
+  <div id="settingsDrawer" class="drawer hidden">
+    <div class="drawer-header">
+      <h2>App Settings</h2>
+      <button class="close-btn" onclick="toggleSettings()">❌</button>
+    </div>
+    
+    <div class="drawer-content">
+      <!-- User Profile Setup -->
+      <div class="profile-section">
+        <div class="avatar-upload">
+          <img src="11947_3.png" alt="Profile" id="userAvatar">
+          <div class="edit-badge">📷</div>
+        </div>
+        <input type="text" class="profile-input" placeholder="Enter Your Name" value="Yuvi Bhai">
+        <input type="date" class="profile-input" title="Date of Birth" required>
+        <button class="save-profile-btn">Save Profile</button>
+      </div>
+
+      <!-- 20+ Professional Settings List -->
+      <ul class="settings-list">
+        <li class="section-title">Account & Security</li>
+        <li>📧 Verify Email Address</li>
+        <li>🔐 Change Password</li>
+        <li>🛡️ Two-Factor Authentication (2FA)</li>
+        <li>🔞 18+ Age Verification Status</li>
+        
+        <li class="section-title">Chat & Preferences</li>
+        <li>💬 Chat History Auto-Save</li>
+        <li>🎙️ AI Voice Replies (Toggle)</li>
+        <li>🔠 Text Size & Font</li>
+        <li>🌍 Language (Hinglish/English)</li>
+        <li>💾 Export Chat History</li>
+        <li>🧹 Clear All Chats</li>
+
+        <li class="section-title">Notifications</li>
+        <li>🔔 Push Notifications</li>
+        <li>🎵 Message Sound Alerts</li>
+        <li>✉️ Email Offers & Updates</li>
+
+        <li class="section-title">Billing & Subscriptions</li>
+        <li>💳 Manage Subscription</li>
+        <li>🧾 Payment History</li>
+        <li>🎟️ Redeem Promo Code</li>
+
+        <li class="section-title">App & Support</li>
+        <li>🌗 Dark / Light Theme</li>
+        <li>🗑️ Clear App Cache</li>
+        <li>📜 Terms & Privacy Policy</li>
+        <li><a href="https://t.me/eagleaarc" style="color:#d175ff; text-decoration:none;">✈️ Join DragoEagle Telegram</a></li>
+        <li class="danger-zone" onclick="window.location.reload()">🚪 Log Out</li>
+        <li class="danger-zone">⚠️ Delete Account Permanently</li>
+      </ul>
     </div>
   </div>
 
