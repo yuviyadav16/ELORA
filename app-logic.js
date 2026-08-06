@@ -1,16 +1,24 @@
-// --- 1. SPLASH SCREEN TO LOGIN ---
+// --- 1. SCREEN SWITCHER (Fixes Black Screen Bug) ---
+function switchScreen(hideId, showId) {
+  document.getElementById(hideId).classList.remove("active", "splash-active");
+  document.getElementById(hideId).classList.add("hidden");
+  
+  document.getElementById(showId).classList.remove("hidden");
+  document.getElementById(showId).classList.add("active");
+}
+
+// --- 2. SPLASH SCREEN TO LOGIN ---
 window.onload = () => {
   setTimeout(() => {
     const splash = document.getElementById("splashScreen");
-    splash.style.opacity = "0";
+    splash.style.opacity = "0"; // Fade out effect
     setTimeout(() => {
-      splash.classList.add("hidden");
-      document.getElementById("authScreen").classList.remove("hidden");
+      switchScreen("splashScreen", "authScreen");
     }, 500);
-  }, 2500); // 2.5 Sec Smooth Splash
+  }, 2500); // 2.5 Sec wait time
 };
 
-// --- 2. AUTHENTICATION & PROFILE LOGIC ---
+// --- 3. AUTHENTICATION & PROFILE LOGIC ---
 function togglePassword() {
   const pwd = document.getElementById("userPassword");
   const icon = document.querySelector(".toggle-password");
@@ -27,18 +35,20 @@ function loginUser() {
   const name = document.getElementById("userName").value;
   const dob = document.getElementById("userDOB").value;
   
-  // Calculate Age (18+ Verification UI Side)
-  const age = new Date().getFullYear() - new Date(dob).getFullYear();
+  if (!name || !dob) {
+    alert("Please fill name and Date of Birth!");
+    return;
+  }
   
-  // Save locally to display in profile
+  // Calculate Age (18+ Verification)
+  const age = new Date().getFullYear() - new Date(dob).getFullYear();
   localStorage.setItem("elora_user", name);
   localStorage.setItem("elora_age", age);
 
-  document.getElementById("authScreen").classList.add("hidden");
-  document.getElementById("dashboardScreen").classList.remove("hidden");
+  switchScreen("authScreen", "dashboardScreen");
 }
 
-// --- 3. SETTINGS & DRAWER LOGIC ---
+// --- 4. SETTINGS & DRAWER LOGIC ---
 function openSettings() {
   document.getElementById("displayUserName").innerText = localStorage.getItem("elora_user") || "Yuvi Bhai";
   document.getElementById("displayUserAge").innerText = `Age: ${localStorage.getItem("elora_age") || "18"}+`;
@@ -59,10 +69,10 @@ function toggleTheme() {
 }
 
 function logoutUser() {
-  location.reload(); // Reloads app back to splash/login
+  location.reload(); 
 }
 
-// DP Upload Logic (Visual change)
+// DP Upload Preview
 document.getElementById('dpUpload').addEventListener('change', function(e) {
   if(e.target.files && e.target.files[0]) {
     const reader = new FileReader();
@@ -73,21 +83,20 @@ document.getElementById('dpUpload').addEventListener('change', function(e) {
   }
 });
 
-// --- 4. CHAT ROOM LOGIC ---
+// --- 5. CHAT ROOM LOGIC ---
 let currentBotLogo = "";
 
 function openChat(name, logoImg, bgImg) {
   currentBotLogo = logoImg;
-  document.getElementById("dashboardScreen").classList.add("hidden");
-  document.getElementById("chatScreen").classList.remove("hidden");
+  switchScreen("dashboardScreen", "chatScreen");
   
   document.getElementById("chatName").innerText = name;
   document.getElementById("chatAvatar").src = logoImg;
   
-  // Set Background Image directly on chat screen
+  // Background set karna
   document.getElementById("chatScreen").style.backgroundImage = `linear-gradient(rgba(10, 10, 15, 0.7), rgba(10, 10, 15, 0.95)), url('${bgImg}')`;
   
-  // Clear chat and start fresh
+  // Clear chat
   const chatArea = document.getElementById("chatArea");
   chatArea.innerHTML = `
     <div class="msg bot-msg fade-up">
@@ -98,16 +107,15 @@ function openChat(name, logoImg, bgImg) {
 }
 
 function goHome() {
-  document.getElementById("chatScreen").classList.add("hidden");
-  document.getElementById("dashboardScreen").classList.remove("hidden");
-  document.getElementById("chatMenu").classList.add("hidden"); // close menu if open
+  switchScreen("chatScreen", "dashboardScreen");
+  document.getElementById("chatMenu").classList.add("hidden"); 
 }
 
 function toggleChatMenu() {
   document.getElementById("chatMenu").classList.toggle("hidden");
 }
 
-// --- 5. CHAT MESSAGING & EMOJI ANIMATION ---
+// --- 6. CHAT MESSAGING & EMOJIS ---
 function handleEnter(e) { if(e.key === 'Enter') sendMessage(); }
 
 function sendMessage() {
@@ -115,18 +123,16 @@ function sendMessage() {
   let text = input.value.trim();
   if (!text) return;
 
-  // Check if text has emojis to animate them
+  // Emoji Regex for Bounce Animation
   const emojiRegex = /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g;
   text = text.replace(emojiRegex, '<span class="emoji-anim">$1</span>');
 
   const chatArea = document.getElementById("chatArea");
-  
-  // Add User Msg
   chatArea.innerHTML += `<div class="msg user-msg fade-up">${text}</div>`;
   input.value = "";
   chatArea.scrollTop = chatArea.scrollHeight;
 
-  // AI Reply Simulation
+  // AI Reply
   setTimeout(() => {
     chatArea.innerHTML += `
       <div class="msg bot-msg fade-up">
@@ -143,13 +149,15 @@ function startNewChat() {
   toggleChatMenu();
 }
 
-// --- 6. MODALS LOGIC ---
+// --- 7. MODALS WARNING LOGIC ---
 function showModal(id) {
   document.getElementById(id).classList.remove("hidden");
-  if(id === 'deleteChatModal') toggleChatMenu();
+  document.getElementById(id).classList.add("active"); // Fixed Modal visibility
+  if(id === 'deleteChatModal') document.getElementById("chatMenu").classList.add("hidden");
 }
 
 function hideModal(id) {
+  document.getElementById(id).classList.remove("active");
   document.getElementById(id).classList.add("hidden");
 }
 
